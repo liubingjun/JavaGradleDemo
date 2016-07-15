@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.mapper.SyslogMapper">
+  <resultMap type="com.manage.model.Syslog" id="syslogMap">
+    <id property="sysLogId" jdbcType="VARCHAR" column="sysLogId"/><!-- 主键 -->
+    <result property="sysLogAcct" jdbcType="VARCHAR" column="sysLogAcct"/><!-- 会员账户 -->
+    <result property="sysLogAdminId" jdbcType="VARCHAR" column="sysLogAdminId"/><!-- 会员ID -->
+    <result property="sysLogAdminOperCls" jdbcType="VARCHAR" column="sysLogAdminOperCls"/><!-- 操作了别 -->
+    <result property="sysLogAdminOperDes" jdbcType="VARCHAR" column="sysLogAdminOperDes"/><!-- 操作描述 -->
+    <result property="sysLogAdminURI" jdbcType="VARCHAR" column="sysLogAdminURI"/><!-- 操作URI -->
+    <result property="sysLogAdminLoginDate" jdbcType="NUMERIC" column="sysLogAdminLoginDate"/><!-- 登录日期 -->
+    <result property="sysLogAdminLoginTime" jdbcType="NUMERIC" column="sysLogAdminLoginTime"/><!-- 登录时间 -->
+    <result property="createDate" jdbcType="NUMERIC" column="createDate"/><!-- 创建日期 -->
+    <result property="createTime" jdbcType="NUMERIC" column="createTime"/><!-- 创建时间 -->
+    <result property="logArchiveStatus" jdbcType="VARCHAR" column="logArchiveStatus"/><!-- 日志归档状态 -->
+    <result property="logArchiveDate" jdbcType="NUMERIC" column="logArchiveDate"/><!-- 归档日期 -->
+    <result property="logArchiveTime" jdbcType="NUMERIC" column="logArchiveTime"/><!-- 归档时间 -->
+  </resultMap>
+  
+  <sql id="columnSql">
+   sysLogId,sysLogAcct,sysLogAdminId,sysLogAdminOperCls,sysLogAdminOperDes,sysLogAdminURI,sysLogAdminLoginDate,sysLogAdminLoginTime,createDate,createTime,logArchiveStatus,logArchiveDate,logArchiveTime
+  </sql>
+  
+  <sql id="insertColumn">
+   <include refid="columnSql"/>
+  </sql>
+  
+  <sql id="queryColumn">
+   <include refid="columnSql"/>
+  </sql>
+  
+  <insert id="insertSyslog" parameterType="com.manage.model.Syslog" >
+    insert into SYSLOG(
+      <include refid="insertColumn"/>
+  ) values (
+    #{sysLogId,jdbcType=VARCHAR},
+    #{sysLogAcct,jdbcType=VARCHAR},
+    #{sysLogAdminId,jdbcType=VARCHAR},
+    #{sysLogAdminOperCls,jdbcType=VARCHAR},
+    #{sysLogAdminOperDes,jdbcType=VARCHAR},
+    #{sysLogAdminURI,jdbcType=VARCHAR},
+    #{sysLogAdminLoginDate,jdbcType=NUMERIC},
+    #{sysLogAdminLoginTime,jdbcType=NUMERIC},
+    #{createDate,jdbcType=NUMERIC},
+    #{createTime,jdbcType=NUMERIC},
+    #{logArchiveStatus,jdbcType=VARCHAR},
+    #{logArchiveDate,jdbcType=NUMERIC},
+    #{logArchiveTime,jdbcType=NUMERIC}
+    )
+  </insert>
+  
+  <update id="updateSyslog" parameterType="com.manage.model.Syslog">
+    update SYSLOG
+      <set>
+        <if test="sysLogAcct != null">
+          sysLogAcct=#{sysLogAcct,jdbcType=VARCHAR},
+        </if>
+        <if test="sysLogAdminId != null">
+          sysLogAdminId=#{sysLogAdminId,jdbcType=VARCHAR},
+        </if>
+        <if test="sysLogAdminOperCls != null">
+          sysLogAdminOperCls=#{sysLogAdminOperCls,jdbcType=VARCHAR},
+        </if>
+        <if test="sysLogAdminOperDes != null">
+          sysLogAdminOperDes=#{sysLogAdminOperDes,jdbcType=VARCHAR},
+        </if>
+        <if test="sysLogAdminURI != null">
+          sysLogAdminURI=#{sysLogAdminURI,jdbcType=VARCHAR},
+        </if>
+        <if test="sysLogAdminLoginDate != null">
+          sysLogAdminLoginDate=#{sysLogAdminLoginDate,jdbcType=NUMERIC},
+        </if>
+        <if test="sysLogAdminLoginTime != null">
+          sysLogAdminLoginTime=#{sysLogAdminLoginTime,jdbcType=NUMERIC},
+        </if>
+        <if test="createDate != null">
+          createDate=#{createDate,jdbcType=NUMERIC},
+        </if>
+        <if test="createTime != null">
+          createTime=#{createTime,jdbcType=NUMERIC},
+        </if>
+        <if test="logArchiveStatus != null">
+          logArchiveStatus=#{logArchiveStatus,jdbcType=VARCHAR},
+        </if>
+        <if test="logArchiveDate != null">
+          logArchiveDate=#{logArchiveDate,jdbcType=NUMERIC},
+        </if>
+        <if test="logArchiveTime != null">
+          logArchiveTime=#{logArchiveTime,jdbcType=NUMERIC},
+        </if>
+      </set>
+    where sysLogId=#{sysLogId,jdbcType=VARCHAR}    
+  </update>  
+  
+  <select id="loadSyslog" resultMap="syslogMap" parameterType="string">
+  select <include refid="queryColumn"/>
+  from SYSLOG t
+  where t.sysLogId=#{sysLogId,jdbcType=VARCHAR}   
+  </select>
+  
+  <delete id="deleteSyslog" parameterType="string">
+  delete from SYSLOG
+  where sysLogId=#{sysLogId,jdbcType=VARCHAR}
+  </delete>  
+  
+  <sql id="whereSql">
+    <where>
+      <if test="sysLogId != null">
+        and sysLogId =#{sysLogId,jdbcType=VARCHAR}
+      </if>
+      <if test="sysLogAcct != null">
+        and sysLogAcct  like #{sysLogAcct,jdbcType=VARCHAR}
+      </if>
+      <if test="sysLogAdminId != null">
+        and sysLogAdminId =#{sysLogAdminId,jdbcType=VARCHAR}
+      </if>
+      <if test="sysLogAdminOperCls != null">
+        and sysLogAdminOperCls =#{sysLogAdminOperCls,jdbcType=VARCHAR}
+      </if>
+      <if test="sysLogAdminOperDes != null">
+        and sysLogAdminOperDes =#{sysLogAdminOperDes,jdbcType=VARCHAR}
+      </if>
+      <if test="sysLogAdminURI != null">
+        and sysLogAdminURI =#{sysLogAdminURI,jdbcType=VARCHAR}
+      </if>
+      <if test="sysLogAdminLoginDate != null">
+        and sysLogAdminLoginDate =#{sysLogAdminLoginDate,jdbcType=NUMERIC}
+      </if>
+      <if test="sysLogAdminLoginTime != null">
+        and sysLogAdminLoginTime =#{sysLogAdminLoginTime,jdbcType=NUMERIC}
+      </if>
+      <if test="createDate != null">
+        and createDate =#{createDate,jdbcType=NUMERIC}
+      </if>
+      <if test="createTime != null">
+        and createTime =#{createTime,jdbcType=NUMERIC}
+      </if>
+      <if test="logArchiveStatus != null">
+        and logArchiveStatus =#{logArchiveStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="logArchiveDate != null">
+        and logArchiveDate =#{logArchiveDate,jdbcType=NUMERIC}
+      </if>
+      <if test="logArchiveTime != null">
+        and logArchiveTime =#{logArchiveTime,jdbcType=NUMERIC}
+      </if>
+      <!--  <if test="searchValue != null">
+      and (
+      )
+     </if>  -->
+    </where>  
+  </sql>  
+  
+  <select id="totalSyslog" resultType="int" parameterType="map">
+     select count(1) as total
+       from SYSLOG t
+  <include refid="whereSql"/> 
+  </select>
+  
+  <select id="querySyslog" resultMap="syslogMap" parameterType="map" fetchSize="200">
+    select <include refid="queryColumn"/> 
+    from SYSLOG t
+    <include refid="whereSql"/>
+    <if test="orderBy != null">
+     order by ${orderBy}
+     </if>
+    <if test="orderBy == null">
+     order by t.sysLogId desc
+     </if>
+  </select>
+</mapper>
