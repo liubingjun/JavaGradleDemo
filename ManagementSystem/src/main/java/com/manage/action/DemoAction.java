@@ -1,6 +1,7 @@
 package com.manage.action;
 
 import com.alibaba.fastjson.JSON;
+import com.manage.model.Sysconfigdic;
 import com.manage.model.Syslog;
 import com.manage.service.DemoService;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -44,6 +46,24 @@ public class DemoAction {
         result.put("result", "syslog");
         demoService.insertDemo(syslog);
         return result;
+    }
+
+    @RequestMapping("/getDDByType")
+    @ResponseBody
+    public Map<String, Sysconfigdic> getDDByType(String type){
+        return demoService.getDDByType(type);
+    }
+
+    @RequestMapping("/getDDBListyType")
+    @ResponseBody
+    public List<Sysconfigdic> getDDBListyType(String type){
+        return demoService.getDDBListyType(type);
+    }
+
+    @RequestMapping("/getSysconfigdic")
+    @ResponseBody
+    public Sysconfigdic getSysconfigdic(String type,String key){
+        return demoService.getSysconfigdic(type,key);
     }
 
 

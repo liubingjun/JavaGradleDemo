@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.manage.mapper.SysconfigdicMapper">
+  <resultMap type="com.manage.model.Sysconfigdic" id="sysconfigdicMap">
+    <id property="sysCfgDicId" jdbcType="VARCHAR" column="sysCfgDicId"/><!-- 主键 -->
+    <result property="sysCfgDicKey" jdbcType="VARCHAR" column="sysCfgDicKey"/><!-- Key -->
+    <result property="sysCfgDicVal" jdbcType="VARCHAR" column="sysCfgDicVal"/><!-- Value -->
+    <result property="sysCfgDicDes" jdbcType="VARCHAR" column="sysCfgDicDes"/><!-- 描述信息 -->
+    <result property="sysCfgDicParenntId" jdbcType="VARCHAR" column="sysCfgDicParenntId"/><!-- 父节点 -->
+    <result property="sysCfgDicDataType" jdbcType="VARCHAR" column="sysCfgDicDataType"/><!-- 数据类型 -->
+    <result property="sysCfgDicIsRoot" jdbcType="VARCHAR" column="sysCfgDicIsRoot"/><!-- 是否为根节点 -->
+    <result property="sysCfgDicDfVal" jdbcType="VARCHAR" column="sysCfgDicDfVal"/><!-- 默认值得 -->
+    <result property="status" jdbcType="VARCHAR" column="status"/><!-- 启用状态 -->
+    <result property="createBy" jdbcType="VARCHAR" column="createBy"/><!-- 创建人 -->
+    <result property="createDate" jdbcType="NUMERIC" column="createDate"/><!-- 创建日期 -->
+    <result property="createTime" jdbcType="NUMERIC" column="createTime"/><!-- 创建时间 -->
+    <result property="modifyBy" jdbcType="VARCHAR" column="modifyBy"/><!-- 修改人 -->
+    <result property="modifyDate" jdbcType="NUMERIC" column="modifyDate"/><!-- 修改日期 -->
+    <result property="modifyTime" jdbcType="NUMERIC" column="modifyTime"/><!-- 修改时间 -->
+  </resultMap>
+  
+  <sql id="columnSql">
+   sysCfgDicId,sysCfgDicKey,sysCfgDicVal,sysCfgDicDes,sysCfgDicParenntId,sysCfgDicDataType,sysCfgDicIsRoot,sysCfgDicDfVal,status,createBy,createDate,createTime,modifyBy,modifyDate,modifyTime
+  </sql>
+  
+  <sql id="insertColumn">
+   <include refid="columnSql"/>
+  </sql>
+  
+  <sql id="queryColumn">
+   <include refid="columnSql"/>
+  </sql>
+  
+  <insert id="insertSysconfigdic" parameterType="com.manage.model.Sysconfigdic" >
+    insert into SYSCONFIGDIC(
+      <include refid="insertColumn"/>
+  ) values (
+    #{sysCfgDicId,jdbcType=VARCHAR},
+    #{sysCfgDicKey,jdbcType=VARCHAR},
+    #{sysCfgDicVal,jdbcType=VARCHAR},
+    #{sysCfgDicDes,jdbcType=VARCHAR},
+    #{sysCfgDicParenntId,jdbcType=VARCHAR},
+    #{sysCfgDicDataType,jdbcType=VARCHAR},
+    #{sysCfgDicIsRoot,jdbcType=VARCHAR},
+    #{sysCfgDicDfVal,jdbcType=VARCHAR},
+    #{status,jdbcType=VARCHAR},
+    #{createBy,jdbcType=VARCHAR},
+    #{createDate,jdbcType=NUMERIC},
+    #{createTime,jdbcType=NUMERIC},
+    #{modifyBy,jdbcType=VARCHAR},
+    #{modifyDate,jdbcType=NUMERIC},
+    #{modifyTime,jdbcType=NUMERIC}
+    )
+  </insert>
+  
+  <update id="updateSysconfigdic" parameterType="com.manage.model.Sysconfigdic">
+    update SYSCONFIGDIC
+      <set>
+        <if test="sysCfgDicKey != null">
+          sysCfgDicKey=#{sysCfgDicKey,jdbcType=VARCHAR},
+        </if>
+        <if test="sysCfgDicVal != null">
+          sysCfgDicVal=#{sysCfgDicVal,jdbcType=VARCHAR},
+        </if>
+        <if test="sysCfgDicDes != null">
+          sysCfgDicDes=#{sysCfgDicDes,jdbcType=VARCHAR},
+        </if>
+        <if test="sysCfgDicParenntId != null">
+          sysCfgDicParenntId=#{sysCfgDicParenntId,jdbcType=VARCHAR},
+        </if>
+        <if test="sysCfgDicDataType != null">
+          sysCfgDicDataType=#{sysCfgDicDataType,jdbcType=VARCHAR},
+        </if>
+        <if test="sysCfgDicIsRoot != null">
+          sysCfgDicIsRoot=#{sysCfgDicIsRoot,jdbcType=VARCHAR},
+        </if>
+        <if test="sysCfgDicDfVal != null">
+          sysCfgDicDfVal=#{sysCfgDicDfVal,jdbcType=VARCHAR},
+        </if>
+        <if test="status != null">
+          status=#{status,jdbcType=VARCHAR},
+        </if>
+        <if test="createBy != null">
+          createBy=#{createBy,jdbcType=VARCHAR},
+        </if>
+        <if test="createDate != null">
+          createDate=#{createDate,jdbcType=NUMERIC},
+        </if>
+        <if test="createTime != null">
+          createTime=#{createTime,jdbcType=NUMERIC},
+        </if>
+        <if test="modifyBy != null">
+          modifyBy=#{modifyBy,jdbcType=VARCHAR},
+        </if>
+        <if test="modifyDate != null">
+          modifyDate=#{modifyDate,jdbcType=NUMERIC},
+        </if>
+        <if test="modifyTime != null">
+          modifyTime=#{modifyTime,jdbcType=NUMERIC},
+        </if>
+      </set>
+    where sysCfgDicId=#{sysCfgDicId,jdbcType=VARCHAR}    
+  </update>  
+  
+  <select id="loadSysconfigdic" resultMap="sysconfigdicMap" parameterType="string">
+  select <include refid="queryColumn"/>
+  from SYSCONFIGDIC t
+  where t.sysCfgDicId=#{sysCfgDicId,jdbcType=VARCHAR}   
+  </select>
+  
+  <delete id="deleteSysconfigdic" parameterType="string">
+  delete from SYSCONFIGDIC
+  where sysCfgDicId=#{sysCfgDicId,jdbcType=VARCHAR}
+  </delete>  
+  
+  <sql id="whereSql">
+    <where>
+      <if test="sysCfgDicId != null">
+        and sysCfgDicId =#{sysCfgDicId,jdbcType=VARCHAR}
+      </if>
+      <if test="sysCfgDicKey != null">
+        and sysCfgDicKey =#{sysCfgDicKey,jdbcType=VARCHAR}
+      </if>
+      <if test="sysCfgDicVal != null">
+        and sysCfgDicVal =#{sysCfgDicVal,jdbcType=VARCHAR}
+      </if>
+      <if test="sysCfgDicDes != null">
+        and sysCfgDicDes  like #{sysCfgDicDes,jdbcType=VARCHAR}
+      </if>
+      <if test="sysCfgDicParenntId != null">
+        and sysCfgDicParenntId =#{sysCfgDicParenntId,jdbcType=VARCHAR}
+      </if>
+      <if test="sysCfgDicDataType != null">
+        and sysCfgDicDataType =#{sysCfgDicDataType,jdbcType=VARCHAR}
+      </if>
+      <if test="sysCfgDicIsRoot != null">
+        and sysCfgDicIsRoot =#{sysCfgDicIsRoot,jdbcType=VARCHAR}
+      </if>
+      <if test="sysCfgDicDfVal != null">
+        and sysCfgDicDfVal =#{sysCfgDicDfVal,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        and status =#{status,jdbcType=VARCHAR}
+      </if>
+      <if test="createBy != null">
+        and createBy =#{createBy,jdbcType=VARCHAR}
+      </if>
+      <if test="createDate != null">
+        and createDate =#{createDate,jdbcType=NUMERIC}
+      </if>
+      <if test="createTime != null">
+        and createTime =#{createTime,jdbcType=NUMERIC}
+      </if>
+      <if test="modifyBy != null">
+        and modifyBy =#{modifyBy,jdbcType=VARCHAR}
+      </if>
+      <if test="modifyDate != null">
+        and modifyDate =#{modifyDate,jdbcType=NUMERIC}
+      </if>
+      <if test="modifyTime != null">
+        and modifyTime =#{modifyTime,jdbcType=NUMERIC}
+      </if>
+      <!--  <if test="searchValue != null">
+      and (
+      )
+     </if>  -->
+    </where>  
+  </sql>  
+  
+  <select id="totalSysconfigdic" resultType="int" parameterType="map">
+     select count(1) as total
+       from SYSCONFIGDIC t
+  <include refid="whereSql"/> 
+  </select>
+  
+  <select id="querySysconfigdic" resultMap="sysconfigdicMap" parameterType="map" fetchSize="200">
+    select <include refid="queryColumn"/> 
+    from SYSCONFIGDIC t
+    <include refid="whereSql"/>
+    <if test="orderBy != null">
+     order by ${orderBy}
+     </if>
+    <if test="orderBy == null">
+     order by t.sysCfgDicId desc
+     </if>
+  </select>
+
+</mapper>
