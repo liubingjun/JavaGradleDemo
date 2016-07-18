@@ -43,11 +43,12 @@ public class InitListener implements ApplicationListener<ContextRefreshedEvent> 
             param.clear();
             for (Sysconfigdic sysconfigdic : list) {
                 param.put("sysCfgDicParenntId", sysconfigdic.getSysCfgDicId());
+                logger.info("加载数据字典："+sysconfigdic.getSysCfgDicKey());
                 List<Sysconfigdic> childrenList = sysconfigdicMapper.querySysconfigdic(param);
                 if(childrenList == null || childrenList.size()==0)continue;
                 for (Sysconfigdic childrenSysconfigdic : childrenList) {
                     hashOperations.put(sysconfigdic.getSysCfgDicKey(),childrenSysconfigdic.getSysCfgDicKey(),childrenSysconfigdic);
-                    logger.info("加载数据字典："+childrenSysconfigdic.getSysCfgDicKey()+"---->"+childrenSysconfigdic.getSysCfgDicVal());
+                    logger.info("加载数据字典子项："+childrenSysconfigdic.getSysCfgDicKey()+"---->"+childrenSysconfigdic.getSysCfgDicVal());
                 }
             }
         }
