@@ -9,6 +9,13 @@
 
     <context:component-scan base-package="com.manage.*"/>
 
+    <!-- 引入配置文件 -->
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:jdbc.properties" />
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+    </bean>
+
     <import resource="spring-mybatis.xml"/>
     <import resource="spring-redis.xml"/>
 

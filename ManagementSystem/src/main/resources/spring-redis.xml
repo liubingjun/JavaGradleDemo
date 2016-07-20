@@ -1,25 +1,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory" p:use-pool="true"
-          p:host-name="192.168.57.202" p:port="6379" p:database="2"/>
+    <context:property-placeholder location="classpath:redis.properties" ignore-unresolvable="true"/>
 
-    <!-- redis template definition -->
-    <!--<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connection-factory-ref="jedisConnectionFactory"/>-->
-
-    <bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate" p:connection-factory-ref="jedisConnectionFactory"/>
-
-    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
-        <property name="connectionFactory" ref="jedisConnectionFactory" />
-        <property name="keySerializer">
-            <bean
-                    class="org.springframework.data.redis.serializer.StringRedisSerializer" />
-        </property>
-        <property name="valueSerializer">
-            <bean
-                    class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
-        </property>
-    </bean>
+    <bean class="com.manage.config.RedisClusterConfig" />
 </beans>

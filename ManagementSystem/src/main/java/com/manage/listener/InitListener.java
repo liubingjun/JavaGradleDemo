@@ -18,7 +18,7 @@ public class InitListener implements ApplicationListener<ContextRefreshedEvent> 
 
     private Logger logger = LoggerFactory.getLogger(InitListener.class);
 
-    @Resource(name="redisTemplate")
+    @Resource
     private HashOperations<String,String,Sysconfigdic> hashOperations;
 
     @Resource

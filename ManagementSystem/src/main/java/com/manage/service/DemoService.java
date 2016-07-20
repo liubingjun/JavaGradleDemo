@@ -3,6 +3,8 @@ package com.manage.service;
 import com.manage.mapper.SyslogMapper;
 import com.manage.model.Sysconfigdic;
 import com.manage.model.Syslog;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.jedis.JedisClusterConnection;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -17,21 +19,23 @@ public class DemoService {
     SyslogMapper syslogMapper;
 
     //  列表操作
-    @Resource(name="redisTemplate")
+    @Resource
     private ListOperations<String, String> listOps;
 
     //  哈希操作
-    @Resource(name="redisTemplate")
+    @Resource
     private HashOperations<String,String,Sysconfigdic> hashOperations;
 
     //set get操作
-    @Resource(name="redisTemplate")
+    @Autowired
     private SetOperations<String,Syslog> setOperations;
+
+    @Autowired
+    JedisClusterConnection clusterConnection;
 
 
 
     public void insertDemo(Syslog syslog) {
-
         syslog.setSysLogId(new Random().nextInt()+"");
 
         //写入redis
@@ -45,6 +49,7 @@ public class DemoService {
     }
 
     public Map<String, Sysconfigdic> getDDByType(String type) {
+
         return hashOperations.entries(type);
     }
 
@@ -53,6 +58,7 @@ public class DemoService {
     }
 
     public Sysconfigdic getSysconfigdic(String type,String key) {
+
         return hashOperations.get(type,key);
     }
 }
