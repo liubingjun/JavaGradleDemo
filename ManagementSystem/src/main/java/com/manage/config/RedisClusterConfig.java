@@ -1,5 +1,7 @@
 package com.manage.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,8 @@ import java.util.Map;
 
 @Configuration
 public class RedisClusterConfig {
+
+    private Logger logger = LoggerFactory.getLogger(RedisClusterConfig.class);
 
     @Value("${spring.redis.cluster.nodes}")
     private String clusterNodes;
@@ -57,12 +61,14 @@ public class RedisClusterConfig {
     @Bean
     public JedisConnectionFactory getConnectionFactory() {
 
+        logger.info("getConnectionFactory");
         return new JedisConnectionFactory(getClusterConfiguration(),getJedisPoolConfig());
 
     }
 
     @Bean
     public JedisClusterConnection getJedisClusterConnection() {
+        logger.info("getJedisClusterConnection");
 
         return (JedisClusterConnection) getConnectionFactory().getConnection();
 
@@ -70,6 +76,7 @@ public class RedisClusterConfig {
 
     @Bean
     public JedisPoolConfig getJedisPoolConfig() {
+        logger.info("getJedisPoolConfig");
 
         JedisPoolConfig jedisPoolConfig =  new JedisPoolConfig();
         jedisPoolConfig.setMaxIdle(maxIdle);
@@ -80,6 +87,7 @@ public class RedisClusterConfig {
 
     @Bean
     public RedisTemplate getRedisTemplate() {
+        logger.info("getRedisTemplate");
 
         RedisTemplate clusterTemplate = new RedisTemplate();
 
@@ -95,16 +103,19 @@ public class RedisClusterConfig {
 
     @Bean
     public ListOperations getListOperations() {
+        logger.info("getListOperations");
         return getRedisTemplate().opsForList();
     }
 
     @Bean
     public HashOperations getHashOperations() {
+        logger.info("getHashOperations");
         return getRedisTemplate().opsForHash();
     }
 
     @Bean
     public SetOperations getSetOperations() {
+        logger.info("getSetOperations");
         return getRedisTemplate().opsForSet();
     }
 }
